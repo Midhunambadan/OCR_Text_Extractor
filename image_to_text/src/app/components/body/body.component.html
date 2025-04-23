@@ -5,13 +5,26 @@
       Extract text from image files using this Optical Character Recognition tool.
     </p>
   
-    <div class="upload-box">
+
+
+    <form (submit)="onSubmit($event)" enctype="multipart/form-data" class="upload-box">
       <label for="file-upload" class="custom-upload">
-        <input type="file" id="file-upload" hidden />
-        <span>📁 Choose Files</span>
+        <input type="file" id="file-upload" (change)="onFileChange($event)"  />
       </label>
+    
+      <br><br>
+      <button type="submit">Extract Text</button>
+    
       <p>Max file size 1GB. <a href="#">Sign Up</a> for more</p>
       <small>By proceeding, you agree to our <a href="#">Terms of Use</a>.</small>
+    </form>
+    
+  
+    <div class="container">
+      <textarea cols="10" rows="10" name="" id="" readonly>
+       {{image}}
+        {{str}}
+      </textarea>
     </div>
   </main>
   

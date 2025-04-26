@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 
 @Component({
@@ -9,22 +10,40 @@ import { Component } from '@angular/core';
 })
 export class BodyComponent {
 
-  str:string=''
-  image:string=''
+  constructor(private http:HttpClient){}
+
+  // str:string=''
+  // image:string=''
   event: any;
   selectedFile: File | undefined;
-  
-  onSubmit(event:any){
-    this.str='helloooo'
-  }
+  extractedText:string=''
+
   
   onFileChange(event:any){
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-      // console.log('File selected:', this.selectedFile.name);
-      this.image=this.selectedFile.name
+    this.selectedFile = event.target.files[0]   
+    // console.log(this.selectedFile)
+  }
+
+
+   
+  onSubmit(event:any){
+    event.preventDefault();
+    
+    if(!this.selectedFile){
+      console.error('No file selected')
+      return
     }
+
+    const formData=new FormData()
+    formData.append('file',this.selectedFile)
+
+    this.http.post('http://localhost:5000/extract',formData).subscribe((res:any)=>{
+
+      this.extractedText=res.text
+      console.log('res',res.text)
+    },(error)=>{
+      console.error('Error---',error)
+    })
   }
 
 }

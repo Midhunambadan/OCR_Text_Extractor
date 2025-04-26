@@ -9,7 +9,7 @@
 
     <form (submit)="onSubmit($event)" enctype="multipart/form-data" class="upload-box">
       <label for="file-upload" class="custom-upload">
-        <input type="file" id="file-upload" (change)="onFileChange($event)"  />
+        <input type="file" id="file-upload"  accept="image/*" (change)="onFileChange($event)"  />
       </label>
     
       <br><br>
@@ -22,8 +22,9 @@
   
     <div class="container">
       <textarea cols="10" rows="10" name="" id="" readonly>
-       {{image}}
-        {{str}}
+      
+       {{extractedText}}
+        
       </textarea>
     </div>
   </main>

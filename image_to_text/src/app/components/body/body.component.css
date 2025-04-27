@@ -143,6 +143,7 @@ h1 {
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 16px;
+  gap: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -180,4 +181,29 @@ textarea {
     width: 100%;
     padding: 12px;
   }
+}
+.copy-btn {
+  background-color: #4CAF50; /* Green background */
+  border: none;
+  color: white; /* White text */
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+.button-group {
+  display: flex;
+  gap: 10px; 
+  margin-top: 10px;
+  justify-content: flex-end
+}
+
+
+
+.copy-btn:hover {
+  background-color: #45a049; /* Darker green on hover */
 }

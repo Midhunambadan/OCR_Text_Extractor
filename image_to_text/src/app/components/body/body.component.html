@@ -1,5 +1,5 @@
 <main>
-    <div class="breadcrumb">Home &gt; Image to Text</div>
+    <!-- <div class="breadcrumb">Home &gt; Image to Text</div> -->
     <h1>Image to Text</h1>
     <p class="description">
       Extract text from image files using this Optical Character Recognition tool.
@@ -21,11 +21,16 @@
     
   
     <div class="container">
-      <textarea cols="10" rows="10" name="" id="" readonly>
-      
+      <textarea cols="10" rows="10" name="" id="textArea" [value]="extractedText" readonly>
        {{extractedText}}
-        
       </textarea>
+      <br>
+      <div class="button-group">
+        <button (click)="copyText()" class="copy-btn" >Copy</button>
+        <button (click)="clearText()" class="copy-btn">Clear</button>
+      </div>
     </div>
+
   </main>
+  
   

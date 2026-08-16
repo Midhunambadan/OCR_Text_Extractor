@@ -1,0 +1,89 @@
+<main>
+  <div class="intro">
+    <span class="eyebrow">OCR · Optical Character Recognition</span>
+    <h1>Turn any image into editable text</h1>
+    <p class="description">
+      Drop a screenshot, scan, or photo below and we'll read what's on it &mdash;
+      clean, copyable text back in seconds.
+    </p>
+  </div>
+
+  <form
+    (submit)="onSubmit($event)"
+    enctype="multipart/form-data"
+    class="upload-box"
+    [class.drag-over]="isDragging"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+  >
+    <div class="scan-frame" [class.scanning]="isLoading">
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+      <span class="sweep-line" *ngIf="isLoading"></span>
+
+      <label for="file-upload" class="custom-upload">
+        <input
+          type="file"
+          id="file-upload"
+          accept="image/*"
+          (change)="onFileChange($event)"
+          hidden
+        />
+
+        <ng-container *ngIf="!selectedFile">
+          <svg class="upload-icon" width="30" height="30" viewBox="0 0 24 24" fill="none">
+            <path d="M12 16V4M12 4L7 9M12 4L17 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 16V18a2 2 0 002 2h12a2 2 0 002-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="upload-text">Click to upload, or drag an image here</span>
+          <small class="upload-hint">PNG, JPG or WEBP &middot; up to 1GB</small>
+        </ng-container>
+
+        <ng-container *ngIf="selectedFile">
+          <svg class="file-icon" width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M14 2v6h6" stroke="currentColor" stroke-width="1.6"/>
+          </svg>
+          <span class="file-chip">{{ selectedFile.name }}</span>
+          <small class="upload-hint">{{ fileSizeLabel }} &middot; click or drop to replace</small>
+        </ng-container>
+      </label>
+    </div>
+
+    <button type="submit" class="extract-btn" [disabled]="!selectedFile || isLoading">
+      <span *ngIf="!isLoading">Extract Text</span>
+      <span *ngIf="isLoading" class="btn-loading">
+        <span class="spinner"></span>
+        Reading image&hellip;
+      </span>
+    </button>
+
+    <p class="error-msg" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <p class="upgrade-note">Max file size 1GB. <a href="#">Sign up</a> for more.</p>
+    <small class="terms-note">By proceeding, you agree to our <a href="#">Terms of Use</a>.</small>
+  </form>
+
+  <section class="container">
+    <div class="result-header">
+      <span class="result-label">Extracted text</span>
+      <span class="result-meta" *ngIf="extractedText">{{ wordCount }} words &middot; {{ charCount }} characters</span>
+    </div>
+
+    <textarea
+      id="textArea"
+      [value]="extractedText"
+      readonly
+      placeholder="Your extracted text will appear here once processing is done..."
+    ></textarea>
+
+    <div class="button-group">
+      <span class="copy-confirm" *ngIf="showCopyConfirm">Copied</span>
+      <button (click)="copyText()" class="copy-btn">Copy</button>
+      <button (click)="clearText()" class="clear-btn">Clear</button>
+    </div>
+  </section>
+</main>
